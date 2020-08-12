@@ -138,7 +138,7 @@ plot_df = function(processed_df,
   return(plt)
 }
 
-cms_list = read.csv("Andean_CompMultSign_table2.v2.sorted.csv") %>%
+cms_list = read.csv("data.csv") %>%
   arrange(chr,loc) %>%
   select(chr,loc,cms_score)
 

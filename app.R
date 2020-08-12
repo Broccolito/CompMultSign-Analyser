@@ -11,129 +11,136 @@ library(plotly)
 source("peak_detection.R")
 
 ui = dashboardPage(skin = "black",title = "CompMultSign Analyser",
-  header = dashboardHeaderPlus(title = "CompMultSign Analyser",
-                               titleWidth = 400),
-  sidebar = dashboardSidebar(width = 400,div(
-    sidebarMenu(
-      menuItem("Chromosome",
-               tabName = "Chromosome",
-               startExpanded = TRUE,
-               div(
-                 numericInput(
-                   inputId = "chr",
-                   label = "Enter Chromosome Number: ",
-                   value = 1,
-                   min = 1,
-                   max = 22,
-                   step = 1,
-                   width = NULL
-                 ),
-                 br()
-               )),
-      menuItem("Signal Processing",
-               tabName = "Signal Processing",
-               startExpanded = FALSE,
-               div(
-                 pickerInput(
-                   inputId = "exponential",
-                   label = "Exponential Enhancer: ",
-                   choices = c(1.1,2,exp(1),10),
-                   selected = exp(1)
-                 ),
-                 numericInput(
-                   inputId = "kernal_size",
-                   label = "Kernal Size: ",
-                   value = 3,
-                   min = 1,
-                   max = 30,
-                   step = 1,
-                   width = NULL
-                 ),
-                 pickerInput(
-                   inputId = "smooth_method",
-                   label = "Smooth Method", 
-                   choices = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
-                   selected = "3RS3R",
-                   options = list(
-                     `live-search` = TRUE)
-                 ),
-                 prettySwitch(
-                   inputId = "threshold",
-                   label = "Select Peak by Thresholding: ",
-                   value = FALSE
-                 ),
-                 numericInput(
-                   inputId = "threshold_percentage",
-                   label = "Threshold Percentage: ",
-                   value = 0.95,
-                   min = 0,
-                   max = 1,
-                   step = 0.01,
-                   width = NULL
-                 ),
-                 prettySwitch(
-                   inputId = "ranking",
-                   label = "Select Peak by Ranking: ",
-                   value = TRUE
-                 ),
-                 numericInput(
-                   inputId = "top_ranking",
-                   label = "Only Select Top: ",
-                   value = 50,
-                   min = 1,
-                   max = 150,
-                   step = 1,
-                   width = NULL
-                 )
-               )),
-      menuItem("Visualization", 
-               tabName = "Visualization",
-               startExpanded = FALSE,
-               div(
-                 textInput(
-                   inputId = "lower_limit",
-                   label = "Lower Limit",
-                   value = "0"
-                 ),
-                 textInput(
-                   inputId = "upper_limit",
-                   label = "Upper Limit",
-                   value = "1e20"
-                 ),
-                 pickerInput(
-                   inputId = "peak_color",
-                   label = "Peak Color", 
-                   choices = colors(),
-                   selected = "coral",
-                   options = list(
-                     `live-search` = TRUE)
-                 ),
-                 pickerInput(
-                   inputId = "peak_shape",
-                   label = "Peak Shape", 
-                   choices = 0:25,
-                   selected = 21,
-                   options = list(
-                     `live-search` = TRUE)
-                 ),
-                 sliderInput(
-                   inputId = "peak_size",
-                   label = "Peak Size",
-                   min = 0.1,
-                   max = 3,
-                   step = 0.1,
-                   value = 1
-                 )
-               ))
-    ),
-    actionButton(inputId = "generate_plot",
-                 label = "Update Plot")
-  )),
-  body = dashboardBody(
-    plotlyOutput(outputId = "generated_plot"),
-    br(),
-    verbatimTextOutput(outputId = "status")
-  )
+                   header = dashboardHeaderPlus(title = "CompMultSign Analyser",
+                                                titleWidth = 400),
+                   sidebar = dashboardSidebar(width = 400,div(
+                     sidebarMenu(
+                       menuItem("Chromosome",
+                                tabName = "Chromosome",
+                                startExpanded = TRUE,
+                                div(
+                                  numericInput(
+                                    inputId = "chr",
+                                    label = "Enter Chromosome Number: ",
+                                    value = 1,
+                                    min = 1,
+                                    max = 22,
+                                    step = 1,
+                                    width = NULL
+                                  ),
+                                  br()
+                                )),
+                       menuItem("Signal Processing",
+                                tabName = "Signal Processing",
+                                startExpanded = FALSE,
+                                div(
+                                  pickerInput(
+                                    inputId = "exponential",
+                                    label = "Exponential Enhancer: ",
+                                    choices = c(1.1,2,exp(1),10),
+                                    selected = exp(1)
+                                  ),
+                                  numericInput(
+                                    inputId = "kernal_size",
+                                    label = "Kernal Size: ",
+                                    value = 3,
+                                    min = 1,
+                                    max = 30,
+                                    step = 1,
+                                    width = NULL
+                                  ),
+                                  pickerInput(
+                                    inputId = "smooth_method",
+                                    label = "Smooth Method", 
+                                    choices = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
+                                    selected = "3RS3R",
+                                    options = list(
+                                      `live-search` = TRUE)
+                                  ),
+                                  prettySwitch(
+                                    inputId = "threshold",
+                                    label = "Select Peak by Thresholding: ",
+                                    value = FALSE
+                                  ),
+                                  numericInput(
+                                    inputId = "threshold_percentage",
+                                    label = "Threshold Percentage: ",
+                                    value = 0.95,
+                                    min = 0,
+                                    max = 1,
+                                    step = 0.01,
+                                    width = NULL
+                                  ),
+                                  prettySwitch(
+                                    inputId = "ranking",
+                                    label = "Select Peak by Ranking: ",
+                                    value = TRUE
+                                  ),
+                                  numericInput(
+                                    inputId = "top_ranking",
+                                    label = "Only Select Top: ",
+                                    value = 50,
+                                    min = 1,
+                                    max = 150,
+                                    step = 1,
+                                    width = NULL
+                                  )
+                                )),
+                       menuItem("Visualization", 
+                                tabName = "Visualization",
+                                startExpanded = FALSE,
+                                div(
+                                  textInput(
+                                    inputId = "lower_limit",
+                                    label = "Lower Limit",
+                                    value = "0"
+                                  ),
+                                  textInput(
+                                    inputId = "upper_limit",
+                                    label = "Upper Limit",
+                                    value = "1e20"
+                                  ),
+                                  pickerInput(
+                                    inputId = "peak_color",
+                                    label = "Peak Color", 
+                                    choices = colors(),
+                                    selected = "coral",
+                                    options = list(
+                                      `live-search` = TRUE)
+                                  ),
+                                  pickerInput(
+                                    inputId = "peak_shape",
+                                    label = "Peak Shape", 
+                                    choices = 0:25,
+                                    selected = 21,
+                                    options = list(
+                                      `live-search` = TRUE)
+                                  ),
+                                  sliderInput(
+                                    inputId = "peak_size",
+                                    label = "Peak Size",
+                                    min = 0.1,
+                                    max = 3,
+                                    step = 0.1,
+                                    value = 1
+                                  )
+                                )),
+                       menuItem("Visit Source Files",
+                                tabName = "Visit Source Files",
+                                startExpanded = FALSE,
+                                div(
+                                  p(" For more information, please visit:"),
+                                  p(" https://github.com/Broccolito/CompMultSign-Analyser")
+                                ))
+                     ),
+                     actionButton(inputId = "generate_plot",
+                                  label = "Update Plot")
+                   )),
+                   body = dashboardBody(
+                     plotlyOutput(outputId = "generated_plot"),
+                     br(),
+                     verbatimTextOutput(outputId = "status")
+                   )
 )
 
 server = function(input, output, session) {
@@ -171,7 +178,7 @@ server = function(input, output, session) {
         paste0("Peak Color: ", isolate(input$peak_color)),
         paste0("Peak Shape: ", isolate(input$peak_shape)),
         paste0("Peak Size: ", isolate(input$peak_size)),
-      sep = "\n")
+        sep = "\n")
     })
   })
   

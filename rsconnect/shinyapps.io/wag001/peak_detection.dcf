@@ -1,0 +1,12 @@
+name: peak_detection
+title: peak_detection
+username:
+account: wag001
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2662070
+bundleId: 3504256
+url: https://wag001.shinyapps.io/peak_detection/
+when: 1597197067.36455
+asMultiple: FALSE
+asStatic: FALSE
